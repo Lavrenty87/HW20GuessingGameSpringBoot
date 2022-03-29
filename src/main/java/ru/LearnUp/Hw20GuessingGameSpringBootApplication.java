@@ -15,19 +15,17 @@ import java.util.Locale;
 @SpringBootApplication
 public class Hw20GuessingGameSpringBootApplication {
 
-	public static void main(String[] args) {
-		ConfigurableApplicationContext context =
+    public static void main(String[] args) {
+        ConfigurableApplicationContext context =
                 SpringApplication.run(Hw20GuessingGameSpringBootApplication.class, args);
-
-        MyEventPublisher pub = context.getBean(MyEventPublisher.class);
 
         Locale locale = Locale.getDefault();
         Integer secretNam = (int) (Math.random() * 1000);
         System.out.println(secretNam);
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
-
-           // System.out.println(context.getMessage("hi", new Object[]{}, locale.ENGLISH));
+            MyEventPublisher pub = context.getBean(MyEventPublisher.class);
+            // System.out.println(context.getMessage("hi", new Object[]{}, locale.ENGLISH));
             //log.info(context.getMessage("hi", new Object[0], locale));
             pub.publisherEvent(context.getMessage("hi", null, locale));
             int read = Integer.parseInt(reader.readLine());
@@ -36,23 +34,23 @@ public class Hw20GuessingGameSpringBootApplication {
                 if (read < secretNam) {
                     //System.out.println(context.getMessage("bigger", null, locale));
                     //log.info(context.getMessage("bigger", null, locale));
-                     pub.publisherEvent(context.getMessage("bigger", null, locale));
+                    pub.publisherEvent(context.getMessage("bigger", null, locale));
                 }
-                if (read > secretNam){
+                if (read > secretNam) {
                     //System.out.println(context.getMessage("less", null, locale));
                     //log.info(context.getMessage("less", null, locale));
-                       pub.publisherEvent(context.getMessage("less", null, locale));
+                    pub.publisherEvent(context.getMessage("less", null, locale));
                 }
                 //System.out.println(context.getMessage("try", null, locale));
                 //log.info(context.getMessage("try", null, locale));
-                  pub.publisherEvent(context.getMessage("try", null, locale));
+                pub.publisherEvent(context.getMessage("try", null, locale));
                 read = Integer.parseInt(reader.readLine());
             }
-           // System.out.println(context.getMessage("guessed", new Object[]{"" + secretNam}, locale) + secretNam);
+            // System.out.println(context.getMessage("guessed", new Object[]{"" + secretNam}, locale) + secretNam);
             //log.info(context.getMessage("guessed", new Object[]{secretNam.toString()}, locale));
-             pub.publisherEvent(context.getMessage("guessed", new Object[]{secretNam.toString()}, locale));
+            pub.publisherEvent(context.getMessage("guessed", new Object[]{secretNam.toString()}, locale));
         } catch (IOException e) {
             e.printStackTrace();
         }
-	}
+    }
 }
